@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_REGISTRY = "docker.io"
+        DOCKERHUB_USERNAME = credentials('pavanvc')
+        DOCKERHUB_PASSWORD = credentials('Gold@1226')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    docker.build("my-docker-image:latest")
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKERHUB_USERNAME}", "${DOCKERHUB_PASSWORD}") {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    }
+}
+
