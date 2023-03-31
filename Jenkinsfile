@@ -16,11 +16,11 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR')]) {
     sh "docker login -u ${env.DOCKERHUB_CREDENTIALS_USR} -p ${env.DOCKERHUB_CREDENTIALS_PSW} https://hub.docker.com/repository/docker/pavanvc/jenkin/general"
-}
-                    sh "docker push jenkin:latest"
+            }
+                sh "docker push jenkin:latest"
                 }
             }
-        }
+        
     }
     
     post {
